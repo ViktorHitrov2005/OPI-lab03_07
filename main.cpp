@@ -1,44 +1,20 @@
 #include <iostream>
-#include "menu.h"
-#include "input_data.h"
-#include "find_line.h"
-#include "main_view.h"
+ #include <fstream>
+ using namespace std;
 
-using namespace std;
-
-//controller
 int main()
-{
-
-    char *fname;
-    int res=menu();
-    int n;
-    float *x=NULL, *y;
-    int imin=-1, jmin=-1,delta;
-    while(res!=0){
-        switch(res){
-        case 1:
-                fname=getFilename();
-                inputArray(fname, n, x, y);
-                break;
-        case 3: if(x!=NULL)
-                  showPoints(n, x, y);
-                else
-                  showError(ERROR_DATA_NOT_INPUTED);
-                break;
-        case 4:if(x!=NULL)
-                  {
-                    delta=findLine(n, x, y,imin, jmin);
-                    showAnswer(imin,jmin, x,y,delta);
-                  }
-                else
-                  showError(ERROR_DATA_NOT_INPUTED);
-                break;
-        }
-
-
-        res=menu();
-    }
-
-    return 0;
-}
+ {
+ ifstream cin("INPUT.TXT");
+ ofstream cout("OUTPUT.TXT");
+ int n; //ввод количества человек в очереди
+ cin>>n;
+ if(n>145){ //в день две кассы не могут принять большее кол-во человек
+ cout<<"NO";
+ }else{
+ int rest=(n*10)/2-5;  //вычисляем время ожидания  Василия в минутах
+ int mins=rest%60;  //определение оставшихся минут
+ int hours=(rest-mins)/60; //определение оставшихся часов
+ cout<<hours<<" "<<mins; //вывод результата
+ }
+ return 0;
+ }
